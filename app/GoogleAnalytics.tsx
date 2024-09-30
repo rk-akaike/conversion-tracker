@@ -8,6 +8,19 @@ import { GA_TRACKING_ID } from "./constants";
 const GoogleAnalytics = () => {
   const pathname = usePathname();
 
+  const storeUTMParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    const utmSource = params.get("utm_source");
+    const utmMedium = params.get("utm_medium");
+    const utmCampaign = params.get("utm_campaign");
+
+    if (utmSource || utmMedium || utmCampaign) {
+      localStorage.setItem("utm_source", utmSource ?? "");
+      localStorage.setItem("utm_medium", utmMedium ?? "");
+      localStorage.setItem("utm_campaign", utmCampaign ?? "");
+    }
+  };
+
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       window.gtag("config", GA_TRACKING_ID, {
@@ -30,7 +43,9 @@ const GoogleAnalytics = () => {
     `;
     document.head.appendChild(script2);
 
-    handleRouteChange(pathname); // Handle the initial page load
+    handleRouteChange(pathname);
+
+    storeUTMParams();
 
     return () => {
       document.head.removeChild(script1);
