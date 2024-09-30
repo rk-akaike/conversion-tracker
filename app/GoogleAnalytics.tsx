@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const GA_TRACKING_ID = "G-7WFYRDDRL5";
+import { GA_TRACKING_ID } from "./constants";
 
 const GoogleAnalytics = () => {
   const pathname = usePathname();
