@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-const Buttons = () => {
+const Home = () => {
   const router = useRouter();
   const handleSignup = () => {
     router.push("/signup");
@@ -20,4 +20,4 @@ const Buttons = () => {
   );
 };
 
-export default Buttons;
+export default Home;

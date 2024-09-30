@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { GA_TRACKING_ID } from "../constants";
 
-export const SignUpPage = () => {
+const SignUpPage = () => {
   const handleSignUp = async () => {
     const userId = uuidv4();
 
