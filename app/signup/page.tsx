@@ -1,8 +1,23 @@
 "use client"; // Use client-side rendering
 
+import { useEffect, useState } from "react";
+
 const SignUpButton = () => {
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check if a user ID already exists in localStorage
+    let storedUserId = localStorage.getItem("user_id");
+    if (!storedUserId) {
+      // Generate a new user ID if none exists
+      storedUserId = `device-${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("user_id", storedUserId);
+    }
+    setUserId(storedUserId);
+  }, []);
+
   const handleSignUp = async () => {
-    const userId = "customer-12345"; // Replace with the actual user ID you get after signup.
+    if (!userId) return;
 
     // Push user ID to the dataLayer
     window.dataLayer = window.dataLayer || [];
