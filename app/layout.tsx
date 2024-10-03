@@ -16,11 +16,6 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata = {
-  title: "Conversion Tracker",
-  description: "Conversion tracking specially for Muwaz",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,8 +23,8 @@ export default function RootLayout({
 }>) {
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function gtag() {
-      window.dataLayer.push(arguments);
+    window.gtag = function gtag(...args: [string, ...unknown[]]) {
+      window.dataLayer.push(args);
     };
     window.gtag("js", new Date());
     window.gtag("config", "GTM-NKWDQD7T");
@@ -41,31 +36,24 @@ export default function RootLayout({
         {/* Google Tag Manager */}
         <Script
           strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtm.js?id=GTM-NKWDQD7T"
+          src={`https://www.googletagmanager.com/gtag/js?id=GTM-NKWDQD7T`}
         />
-        <Script id="gtm-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'GTM-NKWDQD7T');
-          `}
-        </Script>
-        {/* End Google Tag Manager */}
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(...args) { dataLayer.push(args); }
+              gtag('js', new Date());
+              gtag('config', 'GTM-NKWDQD7T');
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-NKWDQD7T"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
         {children}
       </body>
     </html>
