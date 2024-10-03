@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import Script from "next/script";
 import localFont from "next/font/local";
