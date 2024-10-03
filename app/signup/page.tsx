@@ -13,6 +13,8 @@ const SignUpButton = () => {
 
     // Optionally, trigger a GTM event if needed
     window.gtag("event", "sign_up", { user_id: userId });
+    console.log("🚀 ~ handleSignUp ~ window.gtag:", window.gtag);
+    console.log("🚀 ~ handleSignUp ~ window.dataLayer:", window.dataLayer);
 
     // Implement your sign-up logic here
     // For example, API call to create the user...
