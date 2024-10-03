@@ -1,5 +1,6 @@
+import { useEffect } from "react";
+import Script from "next/script";
 import localFont from "next/font/local";
-
 import "./globals.css";
 
 const geistSans = localFont({
@@ -23,22 +24,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", "GTM-NKWDQD7T");
+  }, []);
+
   return (
     <html lang="en">
       <head>
         {/* Google Tag Manager */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=GTM-NKWDQD7T"
-        ></script>
-        <script>
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-NKWDQD7T"
+        />
+        <Script id="gtm-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'GTM-NKWDQD7T');
           `}
-        </script>
+        </Script>
         {/* End Google Tag Manager */}
       </head>
       <body
