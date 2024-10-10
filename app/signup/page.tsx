@@ -18,21 +18,22 @@ const SignUpButton = () => {
 
   const handleSignUp = async () => {
     if (!userId) return;
+    try {
+      // Push user ID to the dataLayer
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "sign_up",
+        user_id: userId,
+      });
 
-    // Push user ID to the dataLayer
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: "sign_up",
-      user_id: userId, // This will be captured by GTM
-    });
+      // Trigger the sign_up event in Google Analytics
+      window.gtag("event", "sign_up", { user_id: userId });
 
-    // Optionally, trigger a GTM event if needed
-    window.gtag("event", "sign_up", { user_id: userId });
-    console.log("🚀 ~ handleSignUp ~ window.gtag:", window.gtag);
-    console.log("🚀 ~ handleSignUp ~ window.dataLayer:", window.dataLayer);
-
-    // Implement your sign-up logic here
-    // For example, API call to create the user...
+      // Implement sign-up logic (e.g., API call)
+      console.log("Sign up event triggered for user:", userId);
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+    }
   };
 
   return (
